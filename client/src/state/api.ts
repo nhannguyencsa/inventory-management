@@ -67,7 +67,7 @@ export const api = createApi({
   //api.reducer is created by createApi
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
   reducerPath: "api", // Tên slice này sẽ xuất hiện trong state (state.api)
-  tagTypes: ["DashboardMetrics", "Products"], //tagTypes (khai báo danh sách tag) → Khi khởi tạo API.
+  tagTypes: ["DashboardMetrics", "Products", "Users"], //tagTypes (khai báo danh sách tag) → Khi khởi tạo API.
   endpoints: (build) => ({
     //build.query<DataType, ArgumentType>
     //DataType: Kiểu dữ liệu mà API sẽ trả về.
@@ -96,8 +96,18 @@ export const api = createApi({
         body: newProduct
       }),
       invalidatesTags: ["Products"]
-    })
+    }),
+
+    getUsers: build.query<User[], void>({
+      query: () => "/users",
+      providesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useGetDashboardMetricsQuery, useGetProductsQuery, useCreateProductMutation } = api;
+export const { 
+  useGetDashboardMetricsQuery,
+  useGetProductsQuery,
+  useCreateProductMutation,
+  useGetUsersQuery
+} = api;
